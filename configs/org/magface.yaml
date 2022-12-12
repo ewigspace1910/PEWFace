@@ -1,0 +1,52 @@
+##model params
+model_name : magface-org
+backbone: orginalr50
+module: ir_se
+loss    : magloss
+criterion: crossentropy
+
+#-------------------
+##input config
+image_size: 112
+embd_size: 512
+class_num: 10572
+sample_num: 490623
+
+##-------------------
+## loss params
+l_a: 10
+u_a: 110
+l_m: 0.45 # carefully select
+u_m: 0.8 # carefully select
+lambda_g: 35
+
+##-------------------
+## hyper params
+weight_decay: !!float 5e-4
+logits_scale: 64
+logits_margin: 0.5
+drop_ratio: 0.5
+
+##-------------------
+##optimizer
+optimizer: SGD
+momentum: 0.9
+base_lr : 0.025
+lr_steps: [18, 28] 
+decay_rate: 0.1
+
+# # ##--------------------
+# # ## run params
+batch_size: 128
+init_epoch: 0
+epoch_num: 30
+step_per_save: 500
+# # # paths 
+train_data: "/home/k64t/face_recognition/data/images_list.txt"
+valid_data: {"lfw":"/home/k64t/face_recognition/data/lfw_pair_new.txt"
+        ,'cf_pf':"/home/k64t/face_recognition/data/cfp_fp_pair_new.txt"
+        ,'agedb30':"/home/k64t/face_recognition/data/agedb_30_pair_new.txt",
+        'calfw': '/home/k64t/face_recognition/data/calfw_pair.txt',
+        'cplfw': '/home/k64t/face_recognition/data/cplfw_pair.txt'
+        }
+

@@ -1,0 +1,42 @@
+##model params
+model_name : adaface-26
+backbone: resnet50
+module: ir_se
+loss    : adaface
+criterion: crossentropy
+
+#-------------------
+##input config
+image_size: 112
+embd_size: 512
+class_num: 10572
+sample_num: 490623
+
+##-------------------
+## hyper params
+weight_decay: !!float 5e-4
+logits_scale: 64
+logits_margin: 0.4
+logits_h: 0.333
+t_alpha: 0.01   #update EMA mean and std
+drop_ratio: 0.4
+decay_rate: 0.1
+
+##-------------------
+##optimizer
+optimizer: SGD
+momentum: 0.9
+base_lr : 0.01
+lr_steps: [10, 18, 22] #epoch
+
+# # ##--------------------
+# # ## run params
+batch_size: 64
+init_epoch: 0
+epoch_num: 26
+step_per_save: 500
+# # # paths 
+train_data: "/home/k64t/face_recognition/data/images_list.txt"
+valid_data: {"lfw":"/home/k64t/face_recognition/data/lfw_pair_new.txt", 
+          'cf_pf':"/home/k64t/face_recognition/data/cfp_fp_pair_new.txt", 
+          'agedb30':"/home/k64t/face_recognition/data/agedb_30_pair_new.txt"}

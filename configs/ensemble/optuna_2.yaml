@@ -1,0 +1,60 @@
+##model params
+model_name : softmax
+backbone: resnet50
+loss    : softmax
+criterion: crossentropy
+
+#-------------------
+weight_path: {
+        "magface" : "/home/k64t/face_recognition/IJB_result/magface_IJBB.npz",
+        "elastic-arc" : "/home/k64t/face_recognition/IJB_result/elastic-arc_IJBB.npz",
+        # "elastic-cos" : "/home/k64t/face_recognition/IJB_result/elastic-cos_IJBB.npz", 
+        "adaface": "/home/k64t/face_recognition/IJB_result/adaface_IJBB.npz"
+        }
+module: {
+        "magface" : "ir_se",
+        "elastic-arc" : "ir_se",
+        "elastic-cos" : "ir_se",
+        "adaface" : "ir_se"
+        }
+ensemble_weights: {
+        "magface" : 0.3706,
+        "elastic-arc" : 0.1972,
+        "elastic-cos" : 0.43,
+        "adaface" : 0.4322}
+mode : "soft"
+#-------------------
+##input config
+image_size: 112
+embd_size: 512
+class_num: 10572
+sample_num: 490623
+
+##-------------------
+## hyper params
+weight_decay: !!float 5e-4
+logits_scale: 64
+logits_margin: 0.5
+drop_ratio: 0.5
+##-------------------
+##optimizer
+optimizer: SGD
+momentum: 0.9
+base_lr : 0.01
+lr_steps: [18, 28] #epoch
+
+# # ##--------------------
+# # ## run params
+batch_size: 128
+init_epoch: 0
+epoch_num: 32
+step_per_save: 500
+# # # paths
+train_data: "/home/k64t/face_recognition/data/images_list.txt"
+valid_data: {"lfw":"/home/k64t/face_recognition/data/lfw_pair_new.txt"
+        ,'cf_pf':"/home/k64t/face_recognition/data/cfp_fp_pair_new.txt"
+        ,'agedb30':"/home/k64t/face_recognition/data/agedb_30_pair_new.txt",
+        'calfw': '/home/k64t/face_recognition/data/calfw_pair.txt',
+        'cplfw': '/home/k64t/face_recognition/data/cplfw_pair.txt'
+        }
+# # test_data: ""
